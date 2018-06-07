@@ -15,7 +15,6 @@ articleView.populateFilters = function() {
 
       // TODO: Refactor this concatenation using a template literal.  Done
       optionTag = `<option value= "${authorName}"> ${authorName}</option>`;
-      // optionTag = '<option value="' + authorName + '">' + authorName + '</option>';
 
       if ($('#author-filter option[value="' + authorName + '"]').length === 0) {
         $('#author-filter').append(optionTag);
@@ -23,14 +22,14 @@ articleView.populateFilters = function() {
 
       // REVIEW: Similar to the above, but...
       // Avoid duplicates! We don't want to append the category name if the <select> already has this category as an option!
-      category = $(this).attr('data-category');
+      optionTag = $(this).attr('data-category');
 
       // TODO: Refactor this concatenation using a template literal.  Done
       optionTag = `<option value="${category}">${category}</option>`;
-      // optionTag = '<option value="' + category + '">' + category + '</option>';
+      optionTag = '<option value="' + category + '">' + category + '</option>';
 
       if ($('#category-filter option[value="' + category + '"]').length === 0) {
-        $('#category-filter').append(optionTag);
+        $('#category-filter').append(category);
       }
     }
   });
@@ -97,7 +96,7 @@ articleView.setTeasers = function() {
 
   // TODO: Add an event handler to reveal all the hidden elements, when the .read-on link is clicked. You can go ahead and hide the "Read On" link once it has been clicked. Be sure to prevent the default link-click action!
   // Ideally, we'd attach this as just one event handler on the #articles section, and let it process (in other words... delegate) any .read-on clicks that happen within child nodes.
-  $('#articles .read-on').on('click', function() {
+  $('#articles').on('click', '.read-on', function() {
     event.preventDefault();
     $('article-body').show();
   });
@@ -105,5 +104,10 @@ articleView.setTeasers = function() {
 
 // TODO: Call all of the above functions, once we are sure the DOM is ready.
 $(document).ready(function() {
+  articleView.populateFilters();
+  articleView.handleAuthorFilter();
+  articleView.handleCategoryFilter();
+  articleView.handleMainNav();
+  articleView.setTeasers();
 
 })
